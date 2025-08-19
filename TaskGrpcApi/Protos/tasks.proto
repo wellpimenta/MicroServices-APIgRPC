@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option csharp_namespace = "TaskGrpcApi.Protos";
+
+package tasks;
+
+message TaskItem {
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  bool isCompleted = 4;
+}
+
+message CreateTaskRequest {
+  string title = 1;
+  string description = 2;
+}
+
+message UpdateTaskRequest {
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  bool isCompleted = 4;
+}
+
+message TaskIdRequest {
+  int32 id = 1;
+}
+
+message TaskListResponse {
+  repeated TaskItem tasks = 1;
+}
+
+message TaskResponse {
+  TaskItem task = 1;
+}
+
+message Empty {}
+
+service TaskService {
+  rpc CreateTask(CreateTaskRequest) returns (TaskResponse);
+  rpc ListTasks(Empty) returns (TaskListResponse);
+  rpc UpdateTask(UpdateTaskRequest) returns (TaskResponse);
+  rpc DeleteTask(TaskIdRequest) returns (Empty);
+}
+
+service AuthService {
+  rpc Authenticate(AuthRequest) returns (AuthResponse);
+}
+
+message AuthRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message AuthResponse {
+  string token = 1;
+}

@@ -1,0 +1,22 @@
+# Use official .NET 7 SDK image to build the app
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /app
+
+# Copy csproj and restore
+COPY *.csproj ./
+RUN dotnet restore
+
+# Copy everything and build
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+# Runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
+COPY --from=build /app/out ./
+
+# Expose gRPC port
+EXPOSE 5000
+EXPOSE 5001
+
+ENTRYPOINT ["dotnet", "TaskGrpcApi.dll"]
