@@ -1,67 +1,68 @@
-# MicroServices-APIgRPC
+MicroServices-APIgRPC
+TaskGrpcApi
+Uma API gRPC desenvolvida com .NET 7 C# para gerenciamento de tarefas com operações de criar, listar, atualizar e excluir. A API utiliza Protocol Buffers para definições de mensagens e serviços, Dapper ORM com SQLite para persistência de dados, e autenticação e autorização baseada em JWT para proteger os endpoints. A aplicação é containerizada usando Docker.
 
-# TaskGrpcApi
+Funcionalidades
+API gRPC com operações CRUD em tarefas
 
-A gRPC API built with .NET 7 C# for managing tasks with create, list, update, and delete operations. The API uses Protocol Buffers for message and service definitions, 
-Dapper ORM with SQLite for data persistence, and JWT-based authentication and authorization to secure endpoints. The application is containerized using Docker.
+Protocol Buffers para definições de contratos de serviço e mensagem
 
----
+Banco de dados SQLite com Dapper ORM para acesso leve aos dados
 
-## Features
+Autenticação e autorização JWT
 
-- gRPC API with CRUD operations on tasks
-- Protocol Buffers for message and service contract definitions
-- SQLite database with Dapper ORM for lightweight data access
-- JWT authentication and authorization
-- Docker support for containerized deployment
+Suporte a Docker para implantação containerizada
 
----
+Primeiros Passos
+Pré-requisitos
+.NET 7 SDK
 
-## Getting Started
+Docker (opcional, para containerização)
 
-### Prerequisites
+Cliente gRPC (ex: BloomRPC, Postman ou cliente personalizado)
 
-- [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
-- [Docker](https://www.docker.com/get-started) (optional, for containerization)
-- gRPC client (e.g., [BloomRPC](https://github.com/uw-labs/bloomrpc), [Postman](https://www.postman.com/), or custom client)
-
----
-
-## Setup and Run
-
-### Clone the repository
-
-```bash
-git clone <repository-url>
+Configuração e Execução
+Clonar o repositório
+bash
+git clone <url-do-repositorio>
 cd TaskGrpcApi
 
 dotnet add package Dapper
 dotnet add package Microsoft.Data.Sqlite
 dotnet add package System.IdentityModel.Tokens.Jwt
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+Definição do Serviço Proto
+As definições de serviço e mensagem estão localizadas em Protos/tasks.proto.
 
-## Proto Service Definition
+RPCs Principais:
+AuthService.Authenticate - autenticar usuário e obter token JWT
 
-The service and message definitions are located in Protos/tasks.proto.
+TaskService.CreateTask - criar uma nova tarefa
 
-### Key RPCs:
-- AuthService.Authenticate - authenticate user and get JWT token
-- TaskService.CreateTask - create a new task
-- TaskService.ListTasks - list all tasks
-- TaskService.UpdateTask - update an existing task
-- TaskService.DeleteTask - delete a task by ID
-### Database
-- Uses SQLite (tasks.db) file created automatically on first run.
-- Table: Tasks with columns Id, Title, Description, and IsCompleted.
-- Data access via Dapper ORM for performance and simplicity.
+TaskService.ListTasks - listar todas as tarefas
 
-## Testing the API
-You can use gRPC clients like BloomRPC or Postman (with gRPC support) to test the endpoints:
+TaskService.UpdateTask - atualizar uma tarefa existente
 
-### Authenticate to get a JWT token.
-- Add the token to the Authorization metadata header on subsequent TaskService requests.
-- Perform task CRUD operations.
-### Notes
-- The JWT signing key and user credentials are hard-coded for demonstration only.
-- For production, use secure storage for secrets and a real user database.
-- HTTPS is enabled by default when running locally with dotnet run.
+TaskService.DeleteTask - excluir uma tarefa por ID
+
+Banco de Dados
+Utiliza SQLite (arquivo tasks.db) criado automaticamente na primeira execução.
+
+Tabela: Tasks com colunas Id, Title, Description e IsCompleted.
+
+Acesso a dados via Dapper ORM para desempenho e simplicidade.
+
+Testando a API
+Você pode usar clientes gRPC como BloomRPC ou Postman (com suporte a gRPC) para testar os endpoints:
+
+Autentique-se para obter um token JWT.
+Adicione o token ao cabeçalho de metadados Authorization nas requisições subsequentes do TaskService.
+
+Execute operações CRUD de tarefas.
+
+Observações
+A chave de assinatura JWT e as credenciais de usuário estão codificadas apenas para demonstração.
+
+Para produção, use armazenamento seguro para segredos e um banco de dados de usuários real.
+
+HTTPS está habilitado por padrão ao executar localmente com dotnet run.
