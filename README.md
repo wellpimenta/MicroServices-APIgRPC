@@ -65,4 +65,3 @@ You can use gRPC clients like BloomRPC or Postman (with gRPC support) to test th
 - The JWT signing key and user credentials are hard-coded for demonstration only.
 - For production, use secure storage for secrets and a real user database.
 - HTTPS is enabled by default when running locally with dotnet run.
-
